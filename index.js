@@ -34,6 +34,11 @@ app.use("/products", productRoute);
 app.use("/carts", cartRoute);
 app.use("/orders", orderRoute);
 app.use("/payment", paymentRoute);
+app.get("/", (req, res)=> {
+    res.status(200).json({
+        msg: "Book api is working correctly!"
+    })
+})
 app.use((req, res)=> {
     res.status(404).json({
         msg: "404 NOT FOUND!"
