@@ -69,12 +69,13 @@ router.get("/find/:id", async (req, res) => {
 router.get("/", async (req, res) => {
     const qNew = req.query.new;
     const qname = req.query.search;
+    let regex = new RegExp(qname, 'i');
     try {
        let products;
        if(qNew){
            products = await Product.find().sort({ createdAt: -1 }).limit(5);
        } else if(qname){
-           products = await Product.find({ title: qname })
+           products = await Product.find({ title: regex })
        } else {
            products = await Product.find();
        }
@@ -89,6 +90,7 @@ router.get("/", async (req, res) => {
             price: doc.price,
             image: doc.image,
             productDes: doc.productDes,
+            url: "https://itbook.store/files/9781617294136/chapter2.pdf"
           };
         }),
       };
