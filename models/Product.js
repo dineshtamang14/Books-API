@@ -7,24 +7,21 @@ const productSchema = new mongoose.Schema({
         required: true,
         unique: true 
     },
-    desc: {
+    subtitle: {
         type: String,
         required: true
     },
-    imgData: {
-        type: Buffer,
-        required: true
-    },
-    img: {
-        type: String,
-        required: true,
-    },
-    categories: {
-        type: Array
+    isbn13: {
+      type: String,
+      default: "1001605784161"  
     },
     price: {
-        type: Number,
+        type: String,
         required: true
+    },
+    image: {
+        type: String,
+        required: true,
     },
     inStock: {
         type: Boolean,

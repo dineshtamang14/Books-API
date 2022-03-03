@@ -9,35 +9,14 @@ const {
 
 // Create
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
-    const {name, data} = req.files.productImg;
-
-    if(name && data){
-        const newProdct = new Product({
-            title: req.body.title,
-            desc: req.body.desc,
-            imgData: data,
-            img: `http://localhost:5000/img/`,
-            categories: req.body.categories,
-            price: req.body.price,
-            inStock: req.body.inStock
-        });
+    const newProdct = new Product(req.body);
     
         try {
             const savedProduct = await newProdct.save();
             res.status(201).json(savedProduct);
         } catch (error) {
             res.status(500).json(error);
-        }
     }
-});
-
-router.get("/img/:id", async (req, res) => {
-    const id = req.params.id;
-    await Product.findById(id).exec().then(data => {
-        res.end(data.imgData);
-    }).catch(err => {
-        console.log(err);
-    })
 });
 
 
@@ -70,7 +49,16 @@ router.delete("/", verifyTokenAndAdmin, async (req, res)=> {
 router.get("/find/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
-        res.status(200).json(product)
+        res.status(200).json({
+            Book: {
+                title: product.title,
+                subtitle: product.subtitle,
+                isbn13: product.isbn13,
+                price: product.price,
+                image: product.image,
+                productDes: product.productDes,
+            }
+        })
     } catch (error) {
         res.status(500).json(error);
     }
@@ -80,20 +68,32 @@ router.get("/find/:id", async (req, res) => {
 // get all product
 router.get("/", async (req, res) => {
     const qNew = req.query.new;
-    const qCategory = req.query.category;
+    const qname = req.query.search;
     try {
        let products;
        if(qNew){
            products = await Product.find().sort({ createdAt: -1 }).limit(5);
        } else if(qCategory){
-           products = await Product.find({ categories: {
-               $in: [qCategory],
-           } })
+           products = await Product.find({ title: qname })
        } else {
            products = await Product.find();
        }
 
-       res.status(200).json(products);
+       const response = {
+        count: products.length,
+        Books: products.map((doc) => {
+          return {
+            title: doc.title,
+            subtitle: doc.subtitle,
+            isbn13: doc.isbn13,
+            price: doc.price,
+            image: doc.image,
+            productDes: doc.productDes,
+          };
+        }),
+      };
+
+       res.status(200).json(response);
 
     } catch (error) {
         res.status(500).json(error);
