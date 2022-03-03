@@ -9,14 +9,35 @@ const {
 
 // Create
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
-    const newProdct = new Product(req.body);
+    const {name, data} = req.files.productImg;
 
-    try {
-        const savedProduct = await newProdct.save();
-        res.status(201).json(savedProduct);
-    } catch (error) {
-        res.status(500).json(error);
+    if(name && data){
+        const newProdct = new Product({
+            title: req.body.title,
+            desc: req.body.desc,
+            imgData: data,
+            img: `http://localhost:5000/img/`,
+            categories: req.body.categories,
+            price: req.body.price,
+            inStock: req.body.inStock
+        });
+    
+        try {
+            const savedProduct = await newProdct.save();
+            res.status(201).json(savedProduct);
+        } catch (error) {
+            res.status(500).json(error);
+        }
     }
+});
+
+router.get("/img/:id", async (req, res) => {
+    const id = req.params.id;
+    await Product.findById(id).exec().then(data => {
+        res.end(data.imgData);
+    }).catch(err => {
+        console.log(err);
+    })
 });
 
 

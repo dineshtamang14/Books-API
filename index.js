@@ -9,13 +9,16 @@ const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const paymentRoute = require("./routes/stripe");
+const upload = require("express-fileupload");
 dotenv.config();
 
 
 const app = express();
 
 app.use(morgan('dev'));
+app.use(upload());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 const port = process.env.PORT || 5000;
