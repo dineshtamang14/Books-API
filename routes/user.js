@@ -4,7 +4,7 @@ const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 
 
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.patch("/:id", verifyTokenAndAuthorization, async (req, res) => {
     if(req.body.password){
         req.body.password = CryptoJS.AES.encrypt(
             req.body.password,
@@ -78,6 +78,7 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
                  },
              }
         ])
+        res.status(200).json(data);
     } catch (error) {
         res.status(500).json(error);
     }

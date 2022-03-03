@@ -22,7 +22,7 @@ const orderSchema = new mongoose.Schema({
         required: true
     }, 
     address: {
-        tyep: Object,
+        type: Object,
         required: true
     },
     status: {
