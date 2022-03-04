@@ -72,6 +72,7 @@ router.get("/find/:id", async (req, res) => {
 router.get("/", async (req, res) => {
     const qNew = req.query.new;
     const qname = req.query.search;
+    const qCategory = req.query.category;
     let regex = new RegExp(qname, 'i');
     try {
        let products;
@@ -79,6 +80,12 @@ router.get("/", async (req, res) => {
            products = await Product.find().sort({ createdAt: -1 }).limit(5);
        } else if(qname){
            products = await Product.find({ title: regex })
+       } else if(qCategory){
+            products = await Product.find({
+                categories: {
+                    $in: [qCategory],
+                },
+            });
        } else {
            products = await Product.find();
        }
