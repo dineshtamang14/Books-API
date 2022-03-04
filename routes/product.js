@@ -53,10 +53,13 @@ router.get("/find/:id", async (req, res) => {
             Book: {
                 title: product.title,
                 subtitle: product.subtitle,
+                category: product.categories,
+                rating: product.rating,
                 isbn13: product.isbn13,
                 price: product.price,
                 image: product.image,
-                productDes: product.productDes,
+                inStock: product.inStock,
+                url: "https://itbook.store/files/9781617294136/chapter2.pdf"
             }
         })
     } catch (error) {
@@ -86,10 +89,12 @@ router.get("/", async (req, res) => {
           return {
             title: doc.title,
             subtitle: doc.subtitle,
+            category: doc.categories,
+            rating: doc.rating,
             isbn13: doc.isbn13,
             price: doc.price,
             image: doc.image,
-            productDes: doc.productDes,
+            inStock: doc.inStock,
             url: "https://itbook.store/files/9781617294136/chapter2.pdf"
           };
         }),
