@@ -49,19 +49,7 @@ router.delete("/", verifyTokenAndAdmin, async (req, res)=> {
 router.get("/find/:id", async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
-        res.status(200).json({
-            Book: {
-                title: product.title,
-                subtitle: product.subtitle,
-                category: product.categories,
-                rating: product.rating,
-                isbn13: product.isbn13,
-                price: product.price,
-                image: product.image,
-                inStock: product.inStock,
-                url: "https://itbook.store/files/9781617294136/chapter2.pdf"
-            }
-        })
+        res.status(200).json(product);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -90,24 +78,7 @@ router.get("/", async (req, res) => {
            products = await Product.find();
        }
 
-       const response = {
-        count: products.length,
-        Books: products.map((doc) => {
-          return {
-            title: doc.title,
-            subtitle: doc.subtitle,
-            category: doc.categories,
-            rating: doc.rating,
-            isbn13: doc.isbn13,
-            price: doc.price,
-            image: doc.image,
-            inStock: doc.inStock,
-            url: "https://itbook.store/files/9781617294136/chapter2.pdf"
-          };
-        }),
-      };
-
-       res.status(200).json(response);
+       res.status(200).json(products);
 
     } catch (error) {
         res.status(500).json(error);
