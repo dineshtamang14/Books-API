@@ -11,6 +11,19 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    image: {
+        type: String,
+        required: true,
+    },
+    categories: { type: Array },
+    price: {
+        type: Number,
+        required: true
+    },
+    inStock: {
+        type: Boolean,
+        default: true
+    },
     rating: { 
         type: Number,
         default: 3
@@ -18,19 +31,6 @@ const productSchema = new mongoose.Schema({
     isbn13: {
       type: String,
       default: "1001605784161"  
-    },
-    price: {
-        type: String,
-        required: true
-    },
-    image: {
-        type: String,
-        required: true,
-    },
-    categories: { type: Array },
-    inStock: {
-        type: Boolean,
-        default: true
     }
 }, { timestamps: true })
 
