@@ -33,7 +33,7 @@ app.use("/users", userRoute);
 app.use("/products", productRoute);
 app.use("/carts", cartRoute);
 app.use("/orders", orderRoute);
-app.use("/payment", paymentRoute);
+app.use("/checkout", paymentRoute);
 app.get("/", (req, res)=> {
     res.status(200).json({
         msg: "Book api is working correctly!"
