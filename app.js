@@ -19,7 +19,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const port = process.env.PORT || 5000;
 const mongodburl = process.env.URL;
 
 mongoose.connect(mongodburl).then(() => {
@@ -43,6 +42,4 @@ app.use((req, res)=> {
     })
 })
 
-app.listen(port, () => {
-    console.log(`server is running on port: ${port}`);
-})
+module.exports = app;
