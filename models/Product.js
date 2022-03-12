@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
         required: true,
         unique: true 
     },
-    subtitle: {
+    desc: {
         type: String,
         required: true
     },
