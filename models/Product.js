@@ -15,6 +15,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    pdf: {
+        type: String,
+        required: true
+    },
     categories: { 
         type: Array,
         required: true
