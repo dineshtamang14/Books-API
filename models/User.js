@@ -23,6 +23,14 @@ const userSchema = new mongoose.Schema({
     img: {
         type: String,
     },
+    status: {
+        type: String,
+        default: "active"
+    },
+    transaction: {
+        type: Number,
+        default: 2000
+    }
 }, { timestamps: true })
 
 

@@ -47,13 +47,21 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req, res)=> {
 
 // get alluser
 router.get("/", verifyTokenAndAdmin, async (req, res)=> {
-    const query = req.query.new;
-
     try {
-        const users = query ? await User.find().sort({ _id: -1 }).limit(5): User.find();
+        const users = await User.find();
         res.status(200).json(users);
-    } catch (error) {
-        res.status(500).json(error);
+    } catch(err){
+        res.status(500).json({err});
+    }
+})
+
+router.get("/", verifyTokenAndAdmin, async (req, res)=>{
+    const query = req.query.new;
+    try {
+        const users = await User.find().sort({ _id: -1 }).limit(5);
+        res.status(200).json(users);
+    } catch(err){
+        res.status(500).json({err});
     }
 })
 
