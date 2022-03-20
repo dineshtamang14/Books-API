@@ -1,4 +1,6 @@
+require("dotenv").config();
 const router = require("express").Router();
+const nodemailer = require("nodemailer");
 const Order = require("../models/Order");
 const {
     verifyToken,
@@ -99,5 +101,47 @@ router.get("/income", verifyTokenAndAdmin, async (req, res) => {
     }
   });
 
+router.post("/send_mail", verifyToken, async (req, res)=> {
+    let {url, email, name} = req.body;
+    const transport = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: "dineshshah960@gmail.com",
+			pass: "SelenaGomez"
+		}
+	})
+
+    const mailOptions = {
+		from: "dineshshah960@gmail.com",
+		to: email,
+		subject: "Book purchase delivery",
+		html: `<div className="email" style="
+        border: 1px solid black;
+        padding: 20px;
+        font-family: sans-serif;
+        line-height: 2;
+        font-size: 20px; 
+        ">
+        <h5>Thank your ${name} for shopping with us!</h5>
+        <ol type="1">
+        <h5>Here is the pdf links of your ordered books: </h5>
+        ${url.map(
+          function(item) {
+            return `<li>${item.pdf}</li>`
+          }
+        )}</ol>
+        <h6>have a great day sir..</h6>
+         </div>
+    `
+	};
+
+	transport.sendMail(mailOptions, function (err, info) {
+        if(err){
+            res.status(500).json({msg: "server error", error: err});
+        } else {
+            res.status(200).json({msg: "successfully send email", data: info});
+        }
+     });
+})
 
 module.exports = router;
