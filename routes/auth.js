@@ -1,3 +1,4 @@
+require("dotenv").config();
 const router = require("express").Router();
 const User = require("../models/User");
 const CryptoJS = require("crypto-js");
@@ -10,7 +11,7 @@ router.post("/register", async (req, res) => {
     username: req.body.username,
     img: req.body.img,
     email: req.body.email,
-    password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY),
+    password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY).toString(),
     number: req.body.number,
     address: req.body.address,
     isAdmin: req.body.isAdmin,
