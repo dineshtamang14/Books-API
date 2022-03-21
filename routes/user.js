@@ -21,10 +21,10 @@ router.post("/forgot", (req, res) => {
             const name = user[0].name;
             const id = user[0]._id;
 
-            const CLIENT_ID = "1003759860094-al4ov7v4antggbe7aaf3im3o473folg5.apps.googleusercontent.com";
-            const CLIENT_SECRET = "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";
-            const REDIRECT_URI = "https://developers.google.com/oauthplayground";
-            const REFRESH_TOKEN = "1//043MxkbS87n6fCgYIARAAGAQSNwF-L9IruRRomknlQnE-wAHr8xN1WhgtRzvaNLMixYpx_d-fnIjZkoD--X4sfDjsqFKIlZsVMe4";
+            const CLIENT_ID = process.env.CLIENT_ID;
+            const CLIENT_SECRET = process.env.CLIENT_SECRET;
+            const REDIRECT_URI = process.env.REDIRECT_URI;
+            const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
         
             const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
             oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN })
